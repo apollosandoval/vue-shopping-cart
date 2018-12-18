@@ -5,7 +5,7 @@
             <div class="list-group-item">
                 <div class="row">
                     <div class="col-md-8">Total</div>
-                    <div class="col-md-2"></div>
+                    <div class="col-md-2">${{ total }}</div>
                 </div>
             </div>
         </div>
@@ -36,6 +36,11 @@ export default {
     components: {
         CartItem
     },
-    props: ['items']
+    props: ['items'],
+    computed: {
+        total: function() {
+            return this.items.reduce( (acc, item) => {return acc+item.product.priceInCents*item.quantity/100}, 0)
+        }
+    }
 }
 </script>

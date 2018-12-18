@@ -2,6 +2,7 @@
   <div id="app">
     <CartHeader />
     <CartItemList v-bind:items="items"/>
+    <AddItem v-bind:products="products" v-bind:addToCart="addToCart"/>
     <CartFooter />
   </div>
 </template>
@@ -10,13 +11,15 @@
 import CartHeader from './components/CartHeader.vue'
 import CartItemList from './components/CartItemList.vue'
 import CartFooter from './components/CartFooter.vue'
+import AddItem from './components/AddItem.vue'
 
 export default {
   name: 'app',
   components: {
     CartHeader,
     CartFooter,
-    CartItemList
+    CartItemList,
+    AddItem
   },
   data: function() {
     return {
@@ -36,6 +39,15 @@ export default {
         { id: 2, product: { id: 41, name: 'Heavy Duty Concrete Plate', priceInCents: 499 }, quantity: 2 },
         { id: 3, product: { id: 42, name: 'Intelligent Paper Knife', priceInCents: 1999 }, quantity: 1 }
       ]
+    }
+  },
+  methods: {
+    addToCart(item) {
+      this.items.push({
+        id: this.items.length+1,
+        product: (this.products.filter(el => el.id === parseInt(item.productId)))[0],
+        quantity: item.quantity
+      })
     }
   }
 }
